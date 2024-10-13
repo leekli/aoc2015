@@ -8,19 +8,24 @@ import (
 )
 
 func main() {
-	// Part 1
-	p1RawInput, err := readFileToString("p1.txt")
+	// Data setup
+	rawInput, err := readFileToString("input.txt")
 
 	if err != nil {
 		os.Exit(-1)
 	}
 
-	p1InputNonParenthesis := RemoveNonValidChars(p1RawInput)
-	p1OOutput := Day1Part1(p1InputNonParenthesis)
+	formattedInput := RemoveNonValidChars(rawInput)
 
-	fmt.Printf("Day 1, Part 1 Output: %d\n", p1OOutput)
+	// Part 1
+	p1Output := Day1Part1(formattedInput)
+
+	fmt.Printf("Day 1, Part 1 Output: %d\n", p1Output)
 
 	// Part 2
+	p2Output := Day1Part2(formattedInput)
+
+	fmt.Printf("Day 1, Part 2 Output: %d\n", p2Output)
 }
 
 func readFileToString(filePath string) (string, error) {
@@ -69,4 +74,34 @@ func Day1Part1(input string) int {
 	}
 
 	return floorNum
+}
+
+func Day1Part2(input string) int {
+	// Should return the number [int] which represents the position of the first character that causes Santa to enter the basement (floor -1)
+
+	if len(input) == 0 {
+		return 0
+	}
+
+	floorNum := 0
+	charPosition := 0
+
+	splitInput := strings.Split(input, "")
+
+	for i := 0; i < len(splitInput); i++ {
+		if (splitInput[i] == "(") {
+			floorNum++
+		}
+
+		if (splitInput[i] == ")") {
+			floorNum--
+		}
+
+		if (floorNum == -1) {
+			charPosition = i + 1
+			break
+		}
+	}
+
+	return charPosition
 }

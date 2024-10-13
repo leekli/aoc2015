@@ -183,3 +183,61 @@ func TestPartOne_ReturnsNumberForMultipleDifferentMovementsToANegativeFloor(test
 		test.Errorf("Expected: -3, Received: %d", output)
 	}
 }
+
+func TestPartTwo_ReturnsZeroIfInputEmpty(test *testing.T) {
+	input := ""
+
+	output := Day1Part2(input)
+
+	if output != 0 {
+		test.Errorf("Expected: 0, Received: %d", output)
+	}
+}
+
+func TestPartTwo_ReturnsZeroIfSingleCharNeverEntersBasement(test *testing.T) {
+	input := "("
+
+	output := Day1Part2(input)
+
+	if output != 0 {
+		test.Errorf("Expected: 0, Received: %d", output)
+	}
+}
+
+func TestPartTwo_ReturnsPositionForSingleCharEnteringBasement(test *testing.T) {
+	input := ")"
+
+	output := Day1Part2(input)
+
+	if output != 1 {
+		test.Errorf("Expected: 1, Received: %d", output)
+	}
+}
+
+func TestPartTwo_ReturnsZeroIfMultipleCharNeverEntersBasement(test *testing.T) {
+	input := "(((((("
+
+	output := Day1Part2(input)
+
+	if output != 0 {
+		test.Errorf("Expected: 0, Received: %d", output)
+	}
+}
+
+func TestPartTwo_ReturnsPositionForMultiCharEnteringBasement(test *testing.T) {
+	input := "())"
+
+	output := Day1Part2(input)
+
+	if output != 3 {
+		test.Errorf("Expected: 3, Received: %d", output)
+	}
+
+	input = "()())"
+
+	output = Day1Part2(input)
+
+	if output != 5 {
+		test.Errorf("Expected: 5, Received: %d", output)
+	}
+}
