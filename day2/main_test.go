@@ -152,3 +152,70 @@ func TestPart1_ReturnsSqFtForMultipleDimensionSets(test *testing.T) {
 		test.Errorf("Expected: 101, Received: %d", output)
 	}
 }
+
+func TestCalcRibbonRequiredForPresent_ReturnsFeetRequiredForSingleDimensions(test *testing.T) {
+	input := []int{2, 3, 4}
+
+	output := CalcRibbonRequiredForPresent(input)
+
+	if output != 10 {
+		test.Errorf("Expected: 10, Received: %d", output)
+	}
+
+	input = []int{1, 1, 10}
+
+	output = CalcRibbonRequiredForPresent(input)
+
+	if output != 4 {
+		test.Errorf("Expected: 4, Received: %d", output)
+	}
+}
+
+func TestCalcRibbonRequiredForBow_ReturnsFeetRequiredForSingleDimensions(test *testing.T) {
+	input := []int{2, 3, 4}
+
+	output := CalcRibbonRequiredForBow(input)
+
+	if output != 24 {
+		test.Errorf("Expected: 24, Received: %d", output)
+	}
+
+	input = []int{1, 1, 10}
+
+	output = CalcRibbonRequiredForBow(input)
+
+	if output != 10 {
+		test.Errorf("Expected: 10, Received: %d", output)
+	}
+}
+
+func TestPart2_ReturnsFeetTotalForSingleDimensions(test *testing.T) {
+	rawInput := "2x3x4"
+	formattedInput := FormatDimensionsIntoSlice(rawInput)
+
+	output := Part2(formattedInput)
+
+	if output != 34 {
+		test.Errorf("Expected: 34, Received: %d", output)
+	}
+
+	rawInput = "1x1x10"
+	formattedInput = FormatDimensionsIntoSlice(rawInput)
+
+	output = Part2(formattedInput)
+
+	if output != 14 {
+		test.Errorf("Expected: 14, Received: %d", output)
+	}
+}
+
+func TestPart2_ReturnsFeetTotalForMultipleDimensions(test *testing.T) {
+	rawInput := "2x3x4\n1x1x10"
+	formattedInput := FormatDimensionsIntoSlice(rawInput)
+
+	output := Part2(formattedInput)
+
+	if output != 48 {
+		test.Errorf("Expected: 48, Received: %d", output)
+	}
+}

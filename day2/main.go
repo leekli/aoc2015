@@ -21,6 +21,10 @@ func main() {
 	// Part 1
 	p1Output := Part1(formattedInput)
 	fmt.Printf("Day 2, Part 1 Output: %d\n", p1Output)
+
+	// Part 2
+	p2Output := Part2(formattedInput)
+	fmt.Printf("Day 2, Part 2 Output: %d\n", p2Output)
 }
 
 func readFileToString(filePath string) (string, error) {
@@ -75,7 +79,19 @@ func Part1(input [][]int) int {
 	return totalSqFt
 }
 
-func Part2() {}
+func Part2(input [][]int) int {
+	totalRibbonNeeded := 0
+
+	for i := 0; i < len(input); i++ {
+		ribbonForPresents := CalcRibbonRequiredForPresent(input[i])
+
+		ribbonForBow := CalcRibbonRequiredForBow(input[i])
+
+		totalRibbonNeeded += ribbonForPresents + ribbonForBow
+	}
+
+	return totalRibbonNeeded
+}
 
 func CalcSurfaceArea(dimensions []int) int {
 	length := dimensions[0]
@@ -103,4 +119,28 @@ func FindSmallestArea(dimensions []int) int {
 	areasList := []int{area1, area2, area3}
 
 	return slices.Min(areasList)
+}
+
+func CalcRibbonRequiredForPresent(dimensions []int) int {
+	length := dimensions[0]
+	width := dimensions[1]
+	height := dimensions[2]
+
+	perim1 := 2 * (length + width)
+	perim2 := 2 * (length + height)
+	perim3 := 2 * (width + height)
+
+	perimsList := []int{perim1, perim2, perim3}
+
+	return slices.Min(perimsList)
+}
+
+func CalcRibbonRequiredForBow(dimensions []int) int {
+	length := dimensions[0]
+	width := dimensions[1]
+	height := dimensions[2]
+
+	cubicTotal := length * width * height
+
+	return cubicTotal
 }
