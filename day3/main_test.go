@@ -298,3 +298,113 @@ func TestPartOne_ReturnsTotalForMultipleMovesWithAlreadyVisited(test *testing.T)
 		test.Errorf("Expected: 2, Received: %d", output)
 	}
 }
+
+func TestPartTwo_ReturnsZeroIfMovesAreEmpty(test *testing.T) {
+	testMoves := ""
+
+	rows := 6
+	cols := 6
+	testHouseGrid := BuildHousesGrid(rows, cols)
+
+	output := Part2(testMoves, testHouseGrid)
+
+	if output != 0 {
+		test.Errorf("Expected: 0, Received: %d", output)
+	}
+}
+
+func TestPartTwo_ReturnsTotalForSingleMove(test *testing.T) {
+	// Moving East
+	testMoves := ">"
+
+	rows := 6
+	cols := 6
+	testHouseGrid := BuildHousesGrid(rows, cols)
+
+	output := Part2(testMoves, testHouseGrid)
+
+	if output != 2 {
+		test.Errorf("Expected: 2, Received: %d", output)
+	}
+
+	// Moving West
+	testMoves = "<"
+
+	rows = 6
+	cols = 6
+	testHouseGrid = BuildHousesGrid(rows, cols)
+
+	output = Part2(testMoves, testHouseGrid)
+
+	if output != 2 {
+		test.Errorf("Expected: 2, Received: %d", output)
+	}
+
+	// Moving North
+	testMoves = "^"
+
+	rows = 6
+	cols = 6
+	testHouseGrid = BuildHousesGrid(rows, cols)
+
+	output = Part2(testMoves, testHouseGrid)
+
+	if output != 2 {
+		test.Errorf("Expected: 2, Received: %d", output)
+	}
+
+	// Moving South
+	testMoves = "v"
+
+	rows = 6
+	cols = 6
+	testHouseGrid = BuildHousesGrid(rows, cols)
+
+	output = Part2(testMoves, testHouseGrid)
+
+	if output != 2 {
+		test.Errorf("Expected: 2, Received: %d", output)
+	}
+}
+
+func TestPartTwo_ReturnsTotalForOneMoveOfEachSanta(test *testing.T) {
+	testMoves := "^v"
+
+	rows := 11
+	cols := 11
+	testHouseGrid := BuildHousesGrid(rows, cols)
+
+	output := Part2(testMoves, testHouseGrid)
+
+	if output != 3 {
+		test.Errorf("Expected: 3, Received: %d", output)
+	}
+}
+
+func TestPartTwo_ReturnsTotalForOneMultipleMovesButSameDeliveries(test *testing.T) {
+	testMoves := "^>v<"
+
+	rows := 11
+	cols := 11
+	testHouseGrid := BuildHousesGrid(rows, cols)
+
+	output := Part2(testMoves, testHouseGrid)
+
+	if output != 3 {
+		test.Errorf("Expected: 3, Received: %d", output)
+	}
+}
+
+func TestPartTwo_ReturnsTotalForOneMultipleMovesAndDifferentDeliveries(test *testing.T) {
+	testMoves := "^v^v^v^v^v"
+
+	rows := 31
+	cols := 31
+	testHouseGrid := BuildHousesGrid(rows, cols)
+
+	output := Part2(testMoves, testHouseGrid)
+
+	if output != 11 {
+		test.Errorf("Expected: 11, Received: %d", output)
+	}
+}
