@@ -72,58 +72,106 @@ func TestGetMD5Hash_ReturnsTheMD5HashCode(test *testing.T) {
 	}
 }
 
-func TestHashBeingsWithFiveZeros_ReturnsFalseForStringLessThanFiveCharsLong(test *testing.T) {
+func TestHashBeingsWithNumOfZeros_ReturnsFalseForStringLessThanFiveCharsLong(test *testing.T) {
 	input := "abcd"
+	inputNums := 5
 
-	output := HashBeingsWithFiveZeros(input)
+	output := HashBeingsWithNumOfZeros(input, inputNums)
 
 	if output != false {
 		test.Errorf("Expected: false, Received: %t", output)
 	}
 }
 
-func TestHashBeingsWithFiveZeros_ReturnsFalseForCodeWhichDoesNotStartWithFiveZeros(test *testing.T) {
+func TestHashBeingsWithNumOfZeros_ReturnsFalseForCodeWhichDoesNotStartWithFiveZeros(test *testing.T) {
 	input := "df6f58808ebfd3e609c234cf2283a989"
+	inputNums := 5
 
-	output := HashBeingsWithFiveZeros(input)
+	output := HashBeingsWithNumOfZeros(input, inputNums)
 
 	if output != false {
 		test.Errorf("Expected: false, Received: %t", output)
 	}
 
 	input = "0000dkf7bx"
+	inputNums = 5
 
-	output = HashBeingsWithFiveZeros(input)
+	output = HashBeingsWithNumOfZeros(input, inputNums)
 
 	if output != false {
 		test.Errorf("Expected: false, Received: %t", output)
 	}
 }
 
-func TestHashBeingsWithFiveZeros_ReturnsTrueForCodeWhichDoesStartWithFiveZeros(test *testing.T) {
+func TestHashBeingsWithNumOfZeros_ReturnsTrueForCodeWhichDoesStartWithFiveZeros(test *testing.T) {
 	input := "00000df08ebfd3e609c234cf2283a989"
+	inputNums := 5
 
-	output := HashBeingsWithFiveZeros(input)
+	output := HashBeingsWithNumOfZeros(input, inputNums)
 
 	if output != true {
 		test.Errorf("Expected: true, Received: %t", output)
 	}
 }
 
-func TestPartOne_ReturnsValidHashWithFiveZeros(test *testing.T) {
-	input := "abcdef"
+func TestHashBeingsWithNumOfZeros_ReturnsFalseWhenSixZerosAsInput(test *testing.T) {
+	input := "00000df08ebfd3e609c234cf2283a989"
+	inputNums := 6
 
-	output := Part1(input)
+	output := HashBeingsWithNumOfZeros(input, inputNums)
+
+	if output != false {
+		test.Errorf("Expected: false, Received: %t", output)
+	}
+}
+
+func TestHashBeingsWithNumOfZeros_ReturnsTrueWhenSixZerosAsInput(test *testing.T) {
+	input := "000000df08ebfd3e609c234cf2283a989"
+	inputNums := 6
+
+	output := HashBeingsWithNumOfZeros(input, inputNums)
+
+	if output != true {
+		test.Errorf("Expected: true, Received: %t", output)
+	}
+}
+
+func TestSolve_ReturnsValidHashWithFiveZeros(test *testing.T) {
+	input := "abcdef"
+	inputNum := 5
+
+	output := Solve(input, inputNum)
 
 	if output != 609043 {
 		test.Errorf("Expected: 609043, Received: %d", output)
 	}
 
 	input = "pqrstuv"
+	inputNum = 5
 
-	output = Part1(input)
+	output = Solve(input, inputNum)
 
 	if output != 1048970 {
 		test.Errorf("Expected: 1048970, Received: %d", output)
+	}
+
+	input = "iwrupvqb"
+	inputNum = 5
+
+	output = Solve(input, inputNum)
+
+	if output != 346386 {
+		test.Errorf("Expected: 346386, Received: %d", output)
+	}
+}
+
+func TestSolve_ReturnsValidHashWithSixZeros(test *testing.T) {
+	input := "iwrupvqb"
+	inputNum := 6
+
+	output := Solve(input, inputNum)
+
+	if output != 9958218 {
+		test.Errorf("Expected: 9958218, Received: %d", output)
 	}
 }

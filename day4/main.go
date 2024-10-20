@@ -5,21 +5,30 @@ import (
 	"encoding/hex"
 	"fmt"
 	"strconv"
+	"strings"
 )
 
 func main() {
+	input := "iwrupvqb"
+
 	// Part 1
-	p1Input := "iwrupvqb"
-	p1Output := Part1(p1Input)
+	p1Num := 5
+	p1Output := Solve(input, p1Num)
 
 	fmt.Printf("Day 4, Part 1 Output: %d\n", p1Output)
+
+	// Part 2
+	p2Num := 6
+	p2Output := Solve(input, p2Num)
+
+	fmt.Printf("Day 4, Part 2 Output: %d\n", p2Output)
 }
 
-func Part1(input string) int {
+func Solve(input string, numToFind int) int {
 	// Have a variable which is just the number, starts at 0 which will be used to increment the number (this is the value to return at the end)
 	answer := 0
 
-	// Have a variable for the ongoing for loop where the hash is not invalid, start at false (changes to true and stops the loop when a hash with five 0000s)
+	// Have a variable for the ongoing for loop where the hash is not invalid, start at false (changes to true and stops the loop when a hash with X [numToFind] number of 0s)
 	validHashFound := false
 
 	// For loop starts here
@@ -27,18 +36,21 @@ func Part1(input string) int {
 	// -- For each iteration:
 	//		-- Get the current number above
 		currentNumToTry := answer
+
 	//		-- Concatenate it to the given string (e.g. 'abcde + 1 (the num)') using .CreateFullSecretKey()
 		fullSecretKeyToTry := CreateFullSecretKey(input, currentNumToTry)
+
 	//		-- Get the MD5 hash using .GetMD5Hash()
 		md5HashToTry := GetMD5Hash(fullSecretKeyToTry)
-	//		-- Check if the hash begins with five zeros using .HashBeingsWithFiveZeros()
-		hasBeginsWithFiveZeros := HashBeingsWithFiveZeros(md5HashToTry)
 
-		if (hasBeginsWithFiveZeros) {
-		//		-- If it does begin with 5 zeros, change the variable above to true to stop the loop
+	//		-- Check if the hash begins with X number of zeros using .HashBeingsWithNumOfZeros()
+		hashBeginsWithXZeros := HashBeingsWithNumOfZeros(md5HashToTry, numToFind)
+
+		if (hashBeginsWithXZeros) {
+		//		-- If it does begin with X [numToFind] zeros, change the variable above to true to stop the loop
 			validHashFound = true
 		} else {
-		//		-- If it does not begin with 5 zeros, increment the number variable above so it goes round again and tries the next number	
+		//		-- If it does not begin with X [numToFind] zeros, increment the number variable above so it goes round again and tries the next number	
 			answer++
 		}
 	}
@@ -46,8 +58,6 @@ func Part1(input string) int {
 	// Return the number tracked above
 	return answer
 }
-
-func Part2() {}
 
 func CreateFullSecretKey(secretKey string, numToAdd int) string {
 	if (len(secretKey) == 0) {
@@ -73,10 +83,12 @@ func GetMD5Hash(inputToConvert string) string {
 	return hex.EncodeToString(hash[:])
 }
 
-func HashBeingsWithFiveZeros(hashCode string) bool {
-	if len(hashCode) >= 5 {
+func HashBeingsWithNumOfZeros(hashCode string, numOfZeros int) bool {
+	if len(hashCode) >= numOfZeros {
 
-        if hashCode[:5] == "00000" {
+		zerosString := strings.Repeat("0", numOfZeros)
+
+        if hashCode[:numOfZeros] == zerosString {
             return true
         } else {
             return false
