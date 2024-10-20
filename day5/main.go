@@ -5,6 +5,7 @@ import (
 	"os"
 	"slices"
 	"strings"
+	"unicode"
 )
 
 func main() {
@@ -21,6 +22,11 @@ func main() {
 	p1Output := Part1(parsedInput)
 
 	fmt.Printf("Day 5, Part 1 Output: %d\n", p1Output)
+
+	// Part 2
+	p2Output := Part2(parsedInput)
+
+	fmt.Printf("Day 5, Part 2 Output: %d\n", p2Output)
 }
 
 func Part1(input []string) int {
@@ -35,7 +41,17 @@ func Part1(input []string) int {
 	return niceStringsTotal
 }
 
-func Part2() {}
+func Part2(input []string) int {
+	niceStringsTotal := 0
+
+	for i := 0; i < len(input); i++ {
+		if IsANiceString_Part2(input[i]) {
+			niceStringsTotal++
+		}
+	}
+
+	return niceStringsTotal
+}
 
 func readFileToString(filePath string) (string, error) {
 	content, err := os.ReadFile(filePath)
@@ -125,6 +141,69 @@ func ContainsDisallowedStrings(input string) bool {
 	return containsDisallowedStrings
 }
 
+func Contains2LettersAtLeastTwice(input string) bool {
+	if (len(input) < 4) {
+		return false
+	}
+
+	contains2LettersAtLeastTwiceNoOverlaps := false
+
+	var pairsMap = make(map[string]int)
+
+	for i := 0; i < len(input) - 1; i++ {
+		firstLetter := string(input[i])
+		secondLetter := string(input[i + 1])
+		currentPair := firstLetter + secondLetter
+
+		_, keyExists := pairsMap[currentPair]
+
+		if keyExists {
+			pairsMap[currentPair] += 1
+		} else {
+			pairsMap[currentPair] = 1
+		}
+
+		if i + 2 < len(input) {
+			overLappingLetter := string(input[i + 2])
+
+			if firstLetter == secondLetter && firstLetter == overLappingLetter {
+				contains2LettersAtLeastTwiceNoOverlaps = false
+
+				break
+			}
+		}
+	}
+
+	for _, total := range pairsMap {
+		if total >= 2 {
+			contains2LettersAtLeastTwiceNoOverlaps = true
+
+			break
+		}
+	}
+
+	return contains2LettersAtLeastTwiceNoOverlaps
+}
+
+func ContainsRepeatingLetterWithOneLetterBetween(input string) bool {
+	if (len(input) < 3) {
+		return false
+	}
+
+	contains2LettersWith1LetterBetween := false
+
+	for i := 0; i < len(input) - 2; i++ {
+		if input[i] == input[i + 2] {
+			if unicode.IsLetter(rune(input[i + 1])) {
+				contains2LettersWith1LetterBetween = true
+				break			
+			}
+		}
+	}
+
+	return contains2LettersWith1LetterBetween
+}
+
 func IsANiceSting(input string) bool {
 	niceString := false
 
@@ -133,6 +212,20 @@ func IsANiceSting(input string) bool {
 	hasDisAllowedStrings := ContainsDisallowedStrings(input)
 
 	if hasCorrectVowels && hasDoubleLetters && !hasDisAllowedStrings {
+		niceString = true
+	}
+
+	return niceString
+}
+
+func IsANiceString_Part2(input string) bool {
+	niceString := false
+
+	has2LettersAtLeastTwice := Contains2LettersAtLeastTwice(input)
+
+	has2LettersWith1Between := ContainsRepeatingLetterWithOneLetterBetween(input)
+
+	if has2LettersAtLeastTwice && has2LettersWith1Between {
 		niceString = true
 	}
 

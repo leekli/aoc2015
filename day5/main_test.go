@@ -385,3 +385,161 @@ func TestPart1_ReturnsTotalOfNiceStrings(test *testing.T) {
 		test.Errorf("Expected: '2', Received: %d", output)
 	}
 }
+
+func TestContains2LettersAtLeastTwice_ReturnsFalseForEmptyInput(test *testing.T) {
+	input := ""
+
+	output := Contains2LettersAtLeastTwice(input)
+
+	if output != false {
+		test.Errorf("Expected: 'false', Received: %t", output)
+	}
+}
+
+func TestContains2LettersAtLeastTwice_ReturnsFalseIfInputIsLessThan4Chars(test *testing.T) {
+	input := "aba"
+
+	output := Contains2LettersAtLeastTwice(input)
+
+	if output != false {
+		test.Errorf("Expected: 'false', Received: %t", output)
+	}
+}
+
+func TestContains2LettersAtLeastTwice_ReturnsFalseIfNotSameLetters(test *testing.T) {
+	input := "abcd"
+
+	output := Contains2LettersAtLeastTwice(input)
+
+	if output != false {
+		test.Errorf("Expected: 'false', Received: %t", output)
+	}
+
+	input = "jsdhafldfopiuyoizaydjbvnmznvb"
+
+	output = Contains2LettersAtLeastTwice(input)
+
+	if output != false {
+		test.Errorf("Expected: 'false', Received: %t", output)
+	}
+}
+
+func TestContains2LettersAtLeastTwice_ReturnsFalseForSame2LettersButAreOverlapping(test *testing.T) {
+	input := "xxxddetvrlpzsfpq"
+
+	output := Contains2LettersAtLeastTwice(input)
+
+	if output != false {
+		test.Errorf("Expected: 'false', Received: %t", output)
+	}
+
+	input = "punnnfyyufkpqilx"
+
+	output = Contains2LettersAtLeastTwice(input)
+
+	if output != false {
+		test.Errorf("Expected: 'false', Received: %t", output)
+	}
+}
+
+func TestContainsRepeatingLetterWithOneLetterBetween_ReturnsFalseForEmptyInput(test *testing.T) {
+	input := ""
+
+	output := ContainsRepeatingLetterWithOneLetterBetween(input)
+
+	if output != false {
+		test.Errorf("Expected: 'false', Received: %t", output)
+	}
+}
+
+func TestContainsRepeatingLetterWithOneLetterBetween_ReturnsFalseIfInputIsLessThan3Chars(test *testing.T) {
+	input := "ab"
+
+	output := ContainsRepeatingLetterWithOneLetterBetween(input)
+
+	if output != false {
+		test.Errorf("Expected: 'false', Received: %t", output)
+	}
+}
+
+func TestContainsRepeatingLetterWithOneLetterBetween_ReturnsFalseForNoRepeatingLetters(test *testing.T) {
+	input := "abc"
+
+	output := ContainsRepeatingLetterWithOneLetterBetween(input)
+
+	if output != false {
+		test.Errorf("Expected: 'false', Received: %t", output)
+	}
+
+	input = "abcdefghijklmn"
+
+	output = ContainsRepeatingLetterWithOneLetterBetween(input)
+
+	if output != false {
+		test.Errorf("Expected: 'false', Received: %t", output)
+	}
+}
+
+func TestContainsRepeatingLetterWithOneLetterBetween_ReturnsTrueForRepeatingLettersWithOneLetterBetween(test *testing.T) {
+	input := "xyx"
+
+	output := ContainsRepeatingLetterWithOneLetterBetween(input)
+
+	if output != true {
+		test.Errorf("Expected: 'true', Received: %t", output)
+	}
+
+	input = "abcdefeghi"
+
+	output = ContainsRepeatingLetterWithOneLetterBetween(input)
+
+	if output != true {
+		test.Errorf("Expected: 'true', Received: %t", output)
+	}
+
+	input = "aaa"
+
+	output = ContainsRepeatingLetterWithOneLetterBetween(input)
+
+	if output != true {
+		test.Errorf("Expected: 'true', Received: %t", output)
+	}
+}
+
+func TestIsANiceString_Part2_ReturnsFalseDueToNoRepeatWithASingleLetterBetween(test *testing.T) {
+	input := "uurcxstgmygtbstg"
+
+	output := IsANiceString_Part2(input)
+
+	if output != false {
+		test.Errorf("Expected: 'false', Received: %t", output)
+	}
+}
+
+func TestIsANiceString_Part2_ReturnsFalseDueToNoRepeatingPairs(test *testing.T) {
+	input := "ieodomkazucvgmuy"
+
+	output := IsANiceString_Part2(input)
+
+	if output != false {
+		test.Errorf("Expected: 'false', Received: %t", output)
+	}
+}
+
+func TestIsANiceString_Part2_ReturnsTrueForANiceString(test *testing.T) {
+	input := "qjhvhtzxzqqjkmpb"
+
+	output := IsANiceString_Part2(input)
+
+	if output != true {
+		test.Errorf("Expected: 'true', Received: %t", output)
+	}
+
+	input = "xxyxx"
+
+	output = IsANiceString_Part2(input)
+
+	if output != true {
+		test.Errorf("Expected: 'true', Received: %t", output)
+	}
+}
