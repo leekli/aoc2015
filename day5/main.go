@@ -146,43 +146,21 @@ func Contains2LettersAtLeastTwice(input string) bool {
 		return false
 	}
 
-	contains2LettersAtLeastTwiceNoOverlaps := false
+	pairsMap := make(map[string]int)
 
-	var pairsMap = make(map[string]int)
+    for i := 0; i < len(input) - 1; i++ {
+        pair := input[i:i + 2]
 
-	for i := 0; i < len(input) - 1; i++ {
-		firstLetter := string(input[i])
-		secondLetter := string(input[i + 1])
-		currentPair := firstLetter + secondLetter
+        if _, exists := pairsMap[pair]; exists {
+            if i > pairsMap[pair] + 1 { 
+                return true
+            }
+        } else {
+            pairsMap[pair] = i
+        }
+    }
 
-		_, keyExists := pairsMap[currentPair]
-
-		if keyExists {
-			pairsMap[currentPair] += 1
-		} else {
-			pairsMap[currentPair] = 1
-		}
-
-		if i + 2 < len(input) {
-			overLappingLetter := string(input[i + 2])
-
-			if firstLetter == secondLetter && firstLetter == overLappingLetter {
-				contains2LettersAtLeastTwiceNoOverlaps = false
-
-				break
-			}
-		}
-	}
-
-	for _, total := range pairsMap {
-		if total >= 2 {
-			contains2LettersAtLeastTwiceNoOverlaps = true
-
-			break
-		}
-	}
-
-	return contains2LettersAtLeastTwiceNoOverlaps
+    return false
 }
 
 func ContainsRepeatingLetterWithOneLetterBetween(input string) bool {
